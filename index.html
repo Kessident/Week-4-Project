@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SoundCloud Music Search</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1 class="header">Really Awesome Music Site</h1><br><br>
+    </header>
+
+    <section class="player">
+      <audio class="music-player" controls="controls" src=""></audio>
+      <p>Now Playing: <span class="nowPlaying"></span></p>
+      <p>By: <span class="nowPlayingUser"></span></p>
+    </section>
+
+    <hr><br><br>
+
+    <section class="search">
+      <form class="search-form">
+        <input type="text" name="searchField" class="searchField" placeholder="Search for Artist">
+        <input type="button" name="searchButton" value="Search" class="searchButton">
+      </form>
+    </section><br><br>
+
+    <hr>
+
+    <section class="results">
+      <p>Search Results: </p>
+    </section>
+  </div>
+   <script src="https://connect.soundcloud.com/sdk/sdk-3.1.2.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+body {
+  background-color: #60d9f1;
+  padding: 30px;
+}
+
+hr{
+  width: 100%;
+}
+
+.container{
+  display: flex;
+  flex-direction: column;
+}
+
+.header{
+  text-align: center;
+}
+.music-player{
+  width: 100%;
+}
+
+.search-form{
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchField{
+  flex-basis: 85%;
+  height: 1.5rem;
+}
+.searchButton{
+  flex-basis: 10%;
+  height: 1.7rem;
+  border: none;
+  border-radius: 5px;
+}
