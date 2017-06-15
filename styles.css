@@ -34,3 +34,18 @@ hr{
   border: none;
   border-radius: 5px;
 }
+
+.results{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.resultsCard{
+  flex: 1 1 15%;
+  display: flex;
+}
+
+.resultsCard p{
+  text-align: center;
+}

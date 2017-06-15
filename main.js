@@ -40,6 +40,25 @@ function playTrack(trackNum){
 function styleResults(trackList){
   for (let i = 0; i < trackList.length; i++){
     let currentTrack = trackList[i];
+    let newCard = document.createElement("div");
+    newCard.classList.add("resultsCard");
+
+    let newImg = document.createElement("img");
+    newImg.classList.add("thumbnail");
+    newimg.src = currentTrack.artwork_url;
+    newcard.appendChild(newImg);
+
+    let newTitle = document.createElement("p");
+    newTitle.classList.add("songTitle");
+    newTitle.innerHTML = currentTrack.permalink;
+    newcard.appendChild(newTitle);
+
+    let newName = document.createElement("p");
+    newName.classList.add("bandName");
+    newName.innerHTML = currentTrack.user.permalink;
+    newcard.appendChild(newName);
+
+    results.appendChild(newCard);
   }
 }
 
