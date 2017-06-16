@@ -51,6 +51,7 @@ hr{
   align-items: center;
   margin: 10px;
   border: 1px solid #000;
+  padding-top: 10px;
 }
 
 .thumbnail{
@@ -60,4 +61,5 @@ hr{
 
 .resultsCard p{
   text-align: center;
+  margin: 0;
 }
