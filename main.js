@@ -5,7 +5,9 @@ const searchField = document.querySelector('.searchField');
 const nowPlaying = document.querySelector('.nowPlaying');
 const nowPlayingUser = document.querySelector('.nowPlayingUser');
 const results = document.querySelector('.results');
+const loadMore = document.querySelector('.loadMoreResults');
 let trackList;
+let searchTerm;
 
 SC.initialize({
   client_id: '095fe1dcd09eb3d0e1d3d89c76f5618f'
@@ -20,24 +22,30 @@ function searchArtist(artistName) {
   }).then(function(tracks) {
     console.log(tracks);
     trackList = tracks;
-
-    styleResults(trackList);
+    searchTerm = artistName;
+    styleResults(trackList, true);
   });
 }
 
+//Load and sutoplay selected track, if streamable
 function playTrack(trackNum){
   track = trackList[trackNum];
   if (track.streamable){
     audioPlayer.src = track.stream_url + "?client_id=" + client_id;
     nowPlaying.innerHTML = track.title;
     nowPlayingUser.innerHTML = track.user.permalink;
+    audioPlayer.setAttribute("autoplay",true);
   }
   else {
     window.alert("Track is not streamable, please select another");
   }
 }
 
-function styleResults(trackList){
+//Creates and places the track cards
+function styleResults(trackList, newSearch){
+  if (newSearch){
+    results.innerHTML = '<p>Search Results: </p>';
+  }
   for (let i = 0; i < trackList.length; i++){
     let currentTrack = trackList[i];
     let newCard = document.createElement("div");
@@ -45,21 +53,43 @@ function styleResults(trackList){
 
     let newImg = document.createElement("img");
     newImg.classList.add("thumbnail");
-    newimg.src = currentTrack.artwork_url;
-    newcard.appendChild(newImg);
+    if (currentTrack.artwork_url){
+      newImg.src = currentTrack.artwork_url;
+    }
+
+    else {
+      newImg.src = "SC_Placeholder.png";
+    }
+    newCard.appendChild(newImg);
 
     let newTitle = document.createElement("p");
     newTitle.classList.add("songTitle");
     newTitle.innerHTML = currentTrack.permalink;
-    newcard.appendChild(newTitle);
+    newCard.appendChild(newTitle);
+
 
     let newName = document.createElement("p");
     newName.classList.add("bandName");
     newName.innerHTML = currentTrack.user.permalink;
-    newcard.appendChild(newName);
+    newCard.appendChild(newName);
 
+    newCard.addEventListener('click', function(e) {
+      playTrack(i);
+    });
     results.appendChild(newCard);
   }
+
+  let loadMoreBtn = document.createElement('input');
+  loadMoreBtn.type = 'button';
+  loadMoreBtn.value = 'Load More Results';
+  loadMoreBtn.addEventListener('click', function(e) {
+    loadMoreRes(artistSearched);
+  });
+  loadMore.appendChild(loadMoreBtn);
+}
+
+function loadMoreRes(artistName) {
+
 }
 
 searchField.addEventListener('keydown', function(e) {
