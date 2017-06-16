@@ -1,40 +1,25 @@
 const audioPlayer = document.querySelector('.music-player');
-const client_id = "095fe1dcd09eb3d0e1d3d89c76f5618f";
-const searchButton = document.querySelector('.searchButton');
-const searchField = document.querySelector('.searchField');
+const searchTrackField = document.querySelector('.searchTrackField');
+const searchTrackBtn = document.querySelector('.searchTrkBtn');
 const nowPlaying = document.querySelector('.nowPlaying');
 const nowPlayingUser = document.querySelector('.nowPlayingUser');
 const results = document.querySelector('.results');
 const loadMore = document.querySelector('.loadMoreResults');
 let trackList;
-let searchTerm;
 
 SC.initialize({
-  client_id: '095fe1dcd09eb3d0e1d3d89c76f5618f'
+  client_id: '8538a1744a7fdaa59981232897501e04'
 });
 
-//Find all tracks of inputted name, limit of 15, store in trackList
-function searchArtist(artistName) {
-
-//   searchTerm = artistName;
-//   fetch('https://api.soundcloud.com/tracks?client_id=' + client_id + '&license=cc-by-sa&offset=15&q=' + artistName + '&limit=15').then(function(response) {
-//     response.json().then(function(data) {
-//       console.log(data);
-//       trackList = data;
-//       styleResults(trackList, newSearch);
-//     });
-//   });
-// }
-
-
+//Find all tracks of inputted name, limit of 30, store in trackList
+function searchTrack(searchName) {
   SC.get('/tracks', {
-    limit: 15,
-    q: artistName,
+    limit: 30,
+    q: searchName,
     license: 'cc-by-sa'
   }).then(function(tracks) {
-    console.log(tracks);
+    // console.log(tracks);
     trackList = tracks;
-    searchTerm = artistName;
     styleResults(trackList, true);
   });
 }
@@ -71,7 +56,7 @@ function styleResults(trackList, newSearch) {
       playTrack(i);
     });
 
-    if (!currentTrack.streamable){
+    if (!currentTrack.streamable) {
       newCard.style.backgroundColor = "red";
       let noStream = document.createElement('p');
       noStream.innerHTML = "<i>Not Streamable</i>";
@@ -86,31 +71,32 @@ function styleResults(trackList, newSearch) {
 function playTrack(trackNum) {
   track = trackList[trackNum];
   if (track.streamable) {
+    const client_id = "8538a1744a7fdaa59981232897501e04";
     audioPlayer.src = track.stream_url + "?client_id=" + client_id;
-    nowPlaying.innerHTML = track.title;
-    nowPlayingUser.innerHTML = track.user.permalink;
+
+    let trackLink = '<a href="' + track.permalink_url + '">' + track.title + '</a>';
+    nowPlaying.innerHTML = trackLink;
+
+    let uploaderLink = '<a href="' + track.user.permalink_url + '">' + track.user.permalink + '</a>';
+    nowPlayingUser.innerHTML = uploaderLink;
+
     audioPlayer.setAttribute("autoplay", true);
   } else {
     window.alert("Track is not streamable, please select another");
   }
 }
 
-searchField.addEventListener('keydown', function(e) {
-  if (e.keyCode === 13) {
-    e.preventDefault();
-    searchArtist(searchField.value);
-    searchField.value = "";
-  }
-});
+(function() {
+  searchTrackField.addEventListener('keydown', function(e) {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+      searchTrack(searchTrackField.value);
+      searchTrackField.value = "";
+    }
+  });
 
-searchButton.addEventListener('click', function(e) {
-  searchArtist(searchField.value);
-  searchField.value = "";
-});
-
-
-
-
-// 4. Create a way to append the fetch results to your page
-
-// 5. Create a way to listen for a click that will play the song in the audio play
+  searchTrackBtn.addEventListener('click', function(e) {
+    searchTrack(searchTrackField.value);
+    searchTrackField.value = "";
+  });
+})();

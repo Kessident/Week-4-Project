@@ -19,17 +19,12 @@ hr{
   width: 100%;
 }
 
-.search-form{
-  display: flex;
-  justify-content: space-between;
-}
-
-.searchField{
-  flex-basis: 85%;
+.search{
+  width: 80%;
   height: 1.5rem;
 }
-.searchButton{
-  flex-basis: 10%;
+.searchBtn{
+  width: 10%;
   height: 1.7rem;
   border: none;
   border-radius: 5px;
@@ -45,7 +40,7 @@ hr{
 }
 
 .resultsCard{
-  flex: 1 1 18%;
+  flex-basis: 18%;
   display: flex;
   flex-direction: column;
   align-items: center;
