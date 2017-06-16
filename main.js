@@ -8,6 +8,7 @@ const results = document.querySelector('.results');
 const loadMore = document.querySelector('.loadMoreResults');
 let trackList;
 let searchTerm;
+let artistSearched;
 
 SC.initialize({
   client_id: '095fe1dcd09eb3d0e1d3d89c76f5618f'
@@ -23,41 +24,37 @@ function searchArtist(artistName) {
     console.log(tracks);
     trackList = tracks;
     searchTerm = artistName;
-    styleResults(trackList, true);
+    styleResults(trackList);
+
   });
 }
 
 //Load and sutoplay selected track, if streamable
-function playTrack(trackNum){
+function playTrack(trackNum) {
   track = trackList[trackNum];
-  if (track.streamable){
+  if (track.streamable) {
     audioPlayer.src = track.stream_url + "?client_id=" + client_id;
     nowPlaying.innerHTML = track.title;
     nowPlayingUser.innerHTML = track.user.permalink;
-    audioPlayer.setAttribute("autoplay",true);
-  }
-  else {
+    audioPlayer.setAttribute("autoplay", true);
+  } else {
     window.alert("Track is not streamable, please select another");
   }
 }
 
 //Creates and places the track cards
-function styleResults(trackList, newSearch){
-  if (newSearch){
-    results.innerHTML = '<p>Search Results: </p>';
-  }
-  for (let i = 0; i < trackList.length; i++){
+function styleResults(trackList) {
+  results.innerHTML = '<p>Search Results: </p>';
+  for (let i = 0; i < trackList.length; i++) {
     let currentTrack = trackList[i];
     let newCard = document.createElement("div");
     newCard.classList.add("resultsCard");
 
     let newImg = document.createElement("img");
     newImg.classList.add("thumbnail");
-    if (currentTrack.artwork_url){
+    if (currentTrack.artwork_url) {
       newImg.src = currentTrack.artwork_url;
-    }
-
-    else {
+    } else {
       newImg.src = "SC_Placeholder.png";
     }
     newCard.appendChild(newImg);
@@ -78,30 +75,23 @@ function styleResults(trackList, newSearch){
     });
     results.appendChild(newCard);
   }
-
-  let loadMoreBtn = document.createElement('input');
-  loadMoreBtn.type = 'button';
-  loadMoreBtn.value = 'Load More Results';
-  loadMoreBtn.addEventListener('click', function(e) {
-    loadMoreRes(artistSearched);
-  });
-  loadMore.appendChild(loadMoreBtn);
 }
 
-function loadMoreRes(artistName) {
-
-}
 
 searchField.addEventListener('keydown', function(e) {
-  if (e.keyCode === 13){
+  if (e.keyCode === 13) {
     e.preventDefault();
-    searchArtist(searchField.value);
+    pageNum = 1;
+    artistSearched = searchField.value;
+    searchArtist(artistSearched, pageNum);
     searchField.value = "";
   }
 });
 
 searchButton.addEventListener('click', function(e) {
-  searchArtist(searchField.value);
+  pageNum = 1;
+  artistSearched = searchField.value;
+  searchArtist(artistSearched, pageNum);
   searchField.value = "";
 });
 
