@@ -5,6 +5,7 @@ const nowPlaying = document.querySelector('.nowPlaying');
 const nowPlayingUser = document.querySelector('.nowPlayingUser');
 const results = document.querySelector('.results');
 const loadMore = document.querySelector('.loadMoreResults');
+const nowPlayImg = document.querySelector('.now-playing-image');
 let trackList;
 
 SC.initialize({
@@ -81,6 +82,12 @@ function playTrack(trackNum) {
 
     let uploaderLink = '<a href="' + track.user.permalink_url + '">' + track.user.permalink + '</a>';
     nowPlayingUser.innerHTML = uploaderLink;
+
+    if (track.artwork_url) {
+      nowPlayImg.src = track.artwork_url;
+    } else {
+      nowPlayImg.src = "SC_Placeholder.png";
+    }
 
     audioPlayer.setAttribute("autoplay", true);
   } else {

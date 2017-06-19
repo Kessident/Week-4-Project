@@ -15,8 +15,18 @@ hr{
 .header{
   text-align: center;
 }
+
+.player{
+  display: flex;
+  align-items: center;
+}
+
 .music-player{
-  width: 100%;
+  flex: 1 0 70%;
+}
+
+.now-playing-card{
+  flex-basis: 15%;
 }
 
 .search{
